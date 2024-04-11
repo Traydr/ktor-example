@@ -1,9 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
+    content: {
+        files: [
+            './src/main/kotlin/**/*.kt',
+        ]
+    },
+    theme: {
+        extend: {},
+    },
+    plugins: [require("daisyui")],
 }
-
