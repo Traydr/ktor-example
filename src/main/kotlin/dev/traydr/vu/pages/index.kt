@@ -9,7 +9,7 @@ import kotlinx.html.*
 fun HTML.index() {
     header("", "")
     body {
-        classes = setOf()
+        classes = setOf("")
         navbar()
         div {
             classes = setOf(

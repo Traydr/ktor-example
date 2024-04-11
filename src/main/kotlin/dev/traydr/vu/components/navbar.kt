@@ -5,7 +5,7 @@ import kotlinx.html.classes
 import kotlinx.html.*
 
 fun FlowContent.navbar() = nav {
-    classes = setOf("navbar", "bg-base-100/75", "outline", "outline-offset-0", "outline-amber-400")
+    classes = setOf("navbar", "bg-base-100/75", "outline", "outline-offset-0", "outline-blue-800")
 
     div {
         classes = setOf("flex-1")
@@ -17,9 +17,9 @@ fun FlowContent.navbar() = nav {
     }
 
     div {
-        classes = setOf("navbar-end", "text-xl")
+        classes = setOf("navbar-end", "text-xl", "pr-4")
         div {
-            +"Hello There"
+            +"Welcome!"
         }
     }
 }

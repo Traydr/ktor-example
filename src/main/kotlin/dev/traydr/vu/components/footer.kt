@@ -9,7 +9,10 @@ fun FlowContent.footer() = footer {
         "footer-center",
         "bg-base-100/75",
         "mt-auto",
-        "text-xl"
+        "text-xl",
+        "outline",
+        "outline-offset-0",
+        "outline-blue-800"
     )
     aside {
         p {
