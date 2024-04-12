@@ -7,7 +7,7 @@ import dev.traydr.vu.components.navbar
 import kotlinx.html.*
 
 fun HTML.index() {
-    header("", "")
+    header("File Manipulator", "Just a manipulator")
     body {
         classes = setOf("")
         navbar()
