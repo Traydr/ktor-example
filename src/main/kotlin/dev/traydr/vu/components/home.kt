@@ -16,21 +16,25 @@ fun FlowContent.home() = div {
         classes = setOf("grid", "grid-cols-2", "gap-4")
         div {
             form {
-                hxPost("/api/v1/file")
-                h1 {
-                    +"Upload a file"
-                }
+                hxPost("/api/v2/upload")
+                hxEncoding("multipart/form-data")
 
                 input {
                     classes = setOf("file-input", "w-full", "max-w-xs")
                     type = InputType.file
                 }
+
+                button {
+                    classes = setOf("btn btn-primary")
+                    type = ButtonType.submit
+                    +"Upload"
+                }
             }
         }
         div {
-            +"Download the file"
             button {
-                hxGet("/css")
+                classes = setOf("btn btn-primary")
+                hxGet("/api/v1/download/file.txt")
                 +"Download"
             }
         }
