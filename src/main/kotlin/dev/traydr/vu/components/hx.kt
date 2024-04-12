@@ -53,3 +53,7 @@ fun HTMLTag.hxBoost(value: String) {
 fun HTMLTag.hxPushURL(value: String) {
     attributes += "hx-push-url" to value
 }
+
+fun HTMLTag.hxEncoding(value: String) {
+    attributes += "hx-encoding" to value
+}
