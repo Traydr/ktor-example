@@ -7,7 +7,7 @@ import dev.traydr.vu.components.navbar
 import kotlinx.html.*
 
 fun HTML.errorPage(text: String, httpError: Int) {
-    header("Titas | Error $httpError", text)
+    header("FM | Error $httpError", text)
     body {
         classes = setOf()
         navbar()
