@@ -1,9 +1,9 @@
-package dev.traydr.vu.pages
+package dev.traydr.vu.web.pages
 
-import dev.traydr.vu.components.footer
-import dev.traydr.vu.components.header
-import dev.traydr.vu.components.home
-import dev.traydr.vu.components.navbar
+import dev.traydr.vu.web.components.footer
+import dev.traydr.vu.web.components.header
+import dev.traydr.vu.web.components.home
+import dev.traydr.vu.web.components.navbar
 import kotlinx.html.*
 
 fun HTML.index() {

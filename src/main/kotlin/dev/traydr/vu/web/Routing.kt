@@ -1,7 +1,7 @@
-package dev.traydr.vu.plugins
+package dev.traydr.vu.web
 
-import dev.traydr.vu.pages.errorPage
-import dev.traydr.vu.pages.index
+import dev.traydr.vu.web.pages.errorPage
+import dev.traydr.vu.web.pages.index
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*

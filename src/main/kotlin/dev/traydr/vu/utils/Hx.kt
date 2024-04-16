@@ -1,4 +1,4 @@
-package dev.traydr.vu.components
+package dev.traydr.vu.utils
 
 import kotlinx.html.HTMLTag
 

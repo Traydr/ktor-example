@@ -1,4 +1,4 @@
-package dev.traydr.vu.components
+package dev.traydr.vu.web.components
 
 import kotlinx.html.HTML
 import kotlinx.html.*

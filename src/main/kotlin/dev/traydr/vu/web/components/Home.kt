@@ -1,5 +1,8 @@
-package dev.traydr.vu.components
+package dev.traydr.vu.web.components
 
+import dev.traydr.vu.utils.hxEncoding
+import dev.traydr.vu.utils.hxGet
+import dev.traydr.vu.utils.hxPost
 import kotlinx.html.FlowContent
 import kotlinx.html.classes
 import kotlinx.html.*
