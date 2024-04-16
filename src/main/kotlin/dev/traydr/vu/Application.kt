@@ -1,6 +1,5 @@
 package dev.traydr.vu
 
-import dev.traydr.vu.plugins.*
 import dev.traydr.vu.web.configureRouting
 import dev.traydr.vu.web.configureSecurity
 import dev.traydr.vu.web.configureSerialization
