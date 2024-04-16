@@ -12,7 +12,7 @@ class UserService(private val userRepository: UserRepository) {
         userRepository.findByEmail(user.email).apply {
             require(this == null) { "Email already registered!" }
         }
-        userRepository.create(user.copy(password = String(base64Encoder.encode(Cipher.encrypt(user.password)))))
+        userRepository.create(user.copy(password = user.password?.let { Cipher.encrypt(it) }))
         return user.copy() // token = generateJwtToken(user)
     }
 }
