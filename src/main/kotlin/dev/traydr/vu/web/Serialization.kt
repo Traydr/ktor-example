@@ -1,4 +1,4 @@
-package dev.traydr.vu.plugins
+package dev.traydr.vu.web
 
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
