@@ -45,6 +45,7 @@ dependencies {
     implementation("com.h2database:h2:2.1.214")
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation ("org.kodein.di:kodein-di:7.21.1")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
