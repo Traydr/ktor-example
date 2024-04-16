@@ -1,6 +1,7 @@
 package dev.traydr.vu
 
 import dev.traydr.vu.plugins.*
+import dev.traydr.vu.web.configureRouting
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
