@@ -1,6 +1,10 @@
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
+val exposed_version: String = "0.41.1"
+val kodein_version: String = "7.21.1"
+val hikari_version: String = "5.1.0"
+val kotlinx_version: String = "0.10.1"
 
 plugins {
     kotlin("jvm") version "1.9.23"
@@ -39,15 +43,17 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation-jvm")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm")
     implementation("io.ktor:ktor-server-html-builder-jvm")
-    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.10.1")
-    implementation("org.jetbrains.exposed:exposed-core:0.41.1")
-    implementation("org.jetbrains.exposed:exposed-jdbc:0.41.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:$kotlinx_version")
+    implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
+    implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
     implementation("com.h2database:h2:2.1.214")
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:$logback_version")
-    implementation ("org.kodein.di:kodein-di:7.21.1")
+    implementation ("org.kodein.di:kodein-di:$kodein_version")
     implementation("io.ktor:ktor-server-auth:$ktor_version")
-    implementation("com.zaxxer:HikariCP:5.1.0")
+    implementation("com.zaxxer:HikariCP:$hikari_version")
+    implementation("at.favre.lib:bcrypt:{latest-version}")
+    implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }

@@ -12,6 +12,7 @@ fun Application.configureSecurity() {
             cookie.path = "/"
             cookie.maxAgeInSeconds = 24 * 60 * 60 // 1 day
             cookie.extensions["SameSite"] = "strict"
+            cookie.secure = true
         }
     }
 
