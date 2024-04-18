@@ -9,4 +9,4 @@
 - https://jetbrains.github.io/Exposed/deep-dive-into-dao.html#referencing
 - https://jetbrains.github.io/Exposed/data-types.html
 - https://github.com/Rudge/kotlin-ktor-realworld-example-app
-- https://kosi-libs.org/kodein/7.21/core/bindings.html
+- https://insert-koin.io/docs/reference/koin-ktor/ktor
