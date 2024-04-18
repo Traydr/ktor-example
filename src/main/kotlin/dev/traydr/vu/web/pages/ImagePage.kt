@@ -17,6 +17,7 @@ fun HTML.imagePage() {
             div {
                 classes = setOf("container", "mx-auto", "grid", "grid-cols-2", "gap-4")
                 div {
+                    classes = setOf("flex", "justify-center")
                     form {
                         hxPost("/api/v2/upload")
                         hxEncoding("multipart/form-data")
@@ -34,6 +35,7 @@ fun HTML.imagePage() {
                     }
                 }
                 div {
+                    classes = setOf("flex", "justify-center")
                     button {
                         classes = setOf("btn btn-primary")
                         hxGet("/api/v1/download/file.txt")
