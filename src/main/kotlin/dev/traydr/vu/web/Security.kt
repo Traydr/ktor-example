@@ -1,16 +1,22 @@
 package dev.traydr.vu.web
 
+import dev.traydr.vu.domain.Token
+import dev.traydr.vu.domain.service.TokenService
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.response.*
 import io.ktor.server.sessions.*
+import org.koin.ktor.ext.inject
+import java.time.LocalDateTime
 
 fun Application.configureSecurity() {
-    data class UserSession(val name: String, val count: Int, val state: String) : Principal
+    val tokenService by inject<TokenService>()
+
+    data class UserSession(val id: Long, val value: String) : Principal
     install(Sessions) {
         cookie<UserSession>("user_session") {
             cookie.path = "/"
-            cookie.maxAgeInSeconds = 24 * 60 * 60 // 1 day
+            cookie.maxAgeInSeconds = 7 * 24 * 60 * 60 // 7 days
             cookie.extensions["SameSite"] = "strict"
             cookie.secure = true
         }
@@ -19,10 +25,16 @@ fun Application.configureSecurity() {
     install(Authentication) {
         session<UserSession>("auth-session") {
             validate { session ->
-                if (session.name.startsWith("jet")) {
-                    session
-                } else {
+                val token: Token? = tokenService.getTokenById(session.id)
+
+                if (token == null) {
                     null
+                } else if (token.expiryDate?.isBefore(LocalDateTime.now()) == true) {
+                    null
+                } else if (token.value != session.value) {
+                    null
+                } else {
+                    session
                 }
             }
             challenge {

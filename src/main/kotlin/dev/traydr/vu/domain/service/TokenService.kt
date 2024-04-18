@@ -49,4 +49,12 @@ class TokenService(
 
         return token!!
     }
+
+    fun refreshToken(token: Token) {
+
+    }
+
+    fun getTokenById(id: Long): Token? {
+        return tokenRepository.findTokenById(id)
+    }
 }
