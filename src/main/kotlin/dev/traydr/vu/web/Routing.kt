@@ -2,7 +2,9 @@ package dev.traydr.vu.web
 
 import dev.traydr.vu.domain.service.TokenService
 import dev.traydr.vu.domain.service.UserService
+import dev.traydr.vu.web.pages.databasePage
 import dev.traydr.vu.web.pages.errorPage
+import dev.traydr.vu.web.pages.imagePage
 import dev.traydr.vu.web.pages.indexPage
 import io.ktor.http.*
 import io.ktor.http.content.*
@@ -33,12 +35,35 @@ fun Application.configureRouting() {
             }
         }
     }
+    // Static Routes
     routing {
         get("/") {
             call.respondHtml(HttpStatusCode.OK) {
                 indexPage()
             }
         }
+        get("/images") {
+            call.respondHtml(HttpStatusCode.OK) {
+                imagePage()
+            }
+        }
+        get("/db") {
+            call.respondHtml(HttpStatusCode.OK) {
+                databasePage()
+            }
+        }
+        get("/robots.txt") {
+            call.respondText {
+                """
+                User-agent: *
+                Disallow: /api/
+                Crawl-delay: 4
+                """.trimIndent()
+            }
+        }
+        staticFiles("/css", File("src/main/resources/css/styles.css"))
+    }
+    routing {
         post("/api/v1/upload") {
             val multipart = call.receiveMultipart()
             multipart.forEachPart { part ->
@@ -89,15 +114,5 @@ fun Application.configureRouting() {
                 call.respondFile(file)
             } else call.respond(HttpStatusCode.NotFound)
         }
-        get("/robots.txt") {
-            call.respondText {
-                """
-                User-agent: *
-                Disallow: /api/
-                Crawl-delay: 4
-                """.trimIndent()
-            }
-        }
-        staticFiles("/css", File("src/main/resources/css/styles.css"))
     }
 }
