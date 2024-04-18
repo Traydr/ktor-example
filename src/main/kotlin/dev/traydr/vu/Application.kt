@@ -6,6 +6,7 @@ import dev.traydr.vu.web.configureSerialization
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import org.koin.ktor.plugin.Koin
 
 fun main() {
     embeddedServer(
@@ -19,6 +20,9 @@ fun main() {
 }
 
 fun Application.module() {
+    install(Koin) {
+
+    }
     configureSecurity()
     configureSerialization()
     configureRouting()
