@@ -10,7 +10,7 @@ fun HTML.indexPage() {
     header("Index", "The home page")
     body {
         navbar()
-        wrapper("Home page") {
+        wrapper("Home") {
 
         }
         footer()
