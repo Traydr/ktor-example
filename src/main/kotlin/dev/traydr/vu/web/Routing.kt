@@ -3,7 +3,7 @@ package dev.traydr.vu.web
 import dev.traydr.vu.domain.service.TokenService
 import dev.traydr.vu.domain.service.UserService
 import dev.traydr.vu.web.pages.errorPage
-import dev.traydr.vu.web.pages.index
+import dev.traydr.vu.web.pages.indexPage
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
@@ -36,7 +36,7 @@ fun Application.configureRouting() {
     routing {
         get("/") {
             call.respondHtml(HttpStatusCode.OK) {
-                index()
+                indexPage()
             }
         }
         post("/api/v1/upload") {

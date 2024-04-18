@@ -6,7 +6,7 @@ import dev.traydr.vu.web.components.home
 import dev.traydr.vu.web.components.navbar
 import kotlinx.html.*
 
-fun HTML.index() {
+fun HTML.indexPage() {
     header("File Manipulator", "Just a manipulator")
     body {
         classes = setOf("")
