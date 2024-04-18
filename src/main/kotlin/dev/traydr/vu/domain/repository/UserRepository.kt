@@ -29,6 +29,13 @@ class UserRepository {
         }
     }
 
+    fun getAll(): List<User> {
+        return transaction {
+            Users.selectAll()
+                .map { Users.toDomain(it) }
+        }
+    }
+
     fun findByEmail(email: String): User? {
         return transaction {
             Users.select { Users.email eq email }

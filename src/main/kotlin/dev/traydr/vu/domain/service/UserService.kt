@@ -6,7 +6,6 @@ import dev.traydr.vu.utils.Cipher
 import java.util.Base64
 
 class UserService(private val userRepository: UserRepository) {
-    private val base64Encoder = Base64.getEncoder()
 
     fun create(user: User): User {
         userRepository.findByEmail(user.email).apply {
@@ -14,5 +13,9 @@ class UserService(private val userRepository: UserRepository) {
         }
         userRepository.create(user.copy(password = user.password?.let { Cipher.encrypt(it) }))
         return user.copy() // token = generateJwtToken(user)
+    }
+
+    fun getAllUsers(): List<User> {
+        return userRepository.getAll()
     }
 }
