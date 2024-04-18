@@ -43,7 +43,14 @@ fun Application.module() {
         modules(repoModule, serviceModule)
     }
 
-    DbConfig.setup("jdbc:sqlite:db/sqlite.db", "", "")
+    val postgresIp = System.getenv("PG_IP")
+    val postgresUsername = System.getenv("PG_USERNAME")
+    val postgresPassword = System.getenv("PG_Password")
+    DbConfig.setup(
+        "jdbc:postgresql://$postgresIp:5432/postgres",
+        postgresUsername,
+        postgresPassword
+    )
 
     configureSecurity()
     configureSerialization()

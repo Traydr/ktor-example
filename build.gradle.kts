@@ -26,8 +26,9 @@ tailwind {
 application {
     mainClass.set("dev.traydr.vu.ApplicationKt")
 
+    val isDevelopment: Boolean = System.getenv("DEV") == "true"
 //    val isDevelopment: Boolean = project.ext.has("development")
-    val isDevelopment: Boolean = true
+//    val isDevelopment: Boolean = true
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
@@ -54,7 +55,7 @@ dependencies {
     implementation("com.zaxxer:HikariCP:$hikari_version")
     implementation("at.favre.lib:bcrypt:0.10.2")
     implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
-    implementation("org.xerial:sqlite-jdbc:3.44.1.0")
+    implementation("org.postgresql:postgresql:42.7.1")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
