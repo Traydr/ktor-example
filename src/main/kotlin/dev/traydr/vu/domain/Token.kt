@@ -6,5 +6,5 @@ data class Token(
     val id: Long? = null,
     val uid: Long? = null,
     val value: String? = null,
-    val expiryDate: LocalDateTime = null,
+    val expiryDate: LocalDateTime? = null,
 )
