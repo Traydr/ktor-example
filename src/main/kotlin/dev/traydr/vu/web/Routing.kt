@@ -1,5 +1,7 @@
 package dev.traydr.vu.web
 
+import dev.traydr.vu.domain.service.TokenService
+import dev.traydr.vu.domain.service.UserService
 import dev.traydr.vu.web.pages.errorPage
 import dev.traydr.vu.web.pages.index
 import io.ktor.http.*
@@ -11,9 +13,13 @@ import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.koin.ktor.ext.inject
 import java.io.File
 
 fun Application.configureRouting() {
+    val tokenService by inject<TokenService>()
+    val userService by inject<UserService>()
+
     install(StatusPages) {
         status(HttpStatusCode.NotFound) { call, status ->
             call.respondHtml(status = status) { errorPage("404: Page Not Found", 404) }

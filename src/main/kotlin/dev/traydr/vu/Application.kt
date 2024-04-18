@@ -1,5 +1,9 @@
 package dev.traydr.vu
 
+import dev.traydr.vu.domain.repository.TokenRepository
+import dev.traydr.vu.domain.repository.UserRepository
+import dev.traydr.vu.domain.service.TokenService
+import dev.traydr.vu.domain.service.UserService
 import dev.traydr.vu.web.configureRouting
 import dev.traydr.vu.web.configureSecurity
 import dev.traydr.vu.web.configureSerialization
@@ -20,9 +24,20 @@ fun main() {
 }
 
 fun Application.module() {
-    install(Koin) {
-
+    val repoModule = org.koin.dsl.module {
+        single { UserRepository() }
+        single { TokenRepository() }
     }
+
+    val serviceModule = org.koin.dsl.module {
+        single { TokenService(get(), get()) }
+        single { UserService(get()) }
+    }
+
+    install(Koin) {
+        modules(repoModule, serviceModule)
+    }
+
     configureSecurity()
     configureSerialization()
     configureRouting()
