@@ -1,13 +1,10 @@
 package dev.traydr.vu.domain.repository
 
 import dev.traydr.vu.domain.Token
+import dev.traydr.vu.domain.User
 import org.jetbrains.exposed.dao.id.LongIdTable
-import org.jetbrains.exposed.sql.Column
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.javatime.datetime
-import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
 internal object Tokens : LongIdTable() {
@@ -39,5 +36,50 @@ class TokenRepository {
                 .map { Tokens.toDomain(it) }
                 .firstOrNull()
         }
+    }
+
+    fun findTokenByToken(value: String): Token? {
+        return transaction {
+            Tokens.select {
+                Tokens.value eq value
+            }
+                .map { Tokens.toDomain(it) }
+                .firstOrNull()
+        }
+    }
+
+    fun findTokenById(id: Long): Token? {
+        return transaction {
+            Tokens.select {
+                Tokens.id eq id
+            }
+                .map { Tokens.toDomain(it) }
+                .firstOrNull()
+        }
+    }
+
+    fun create(token: Token): Long {
+        return transaction {
+            Tokens.insertAndGetId { row ->
+                row[userId] = token.uid!!
+                row[value] = token.value!!
+                row[expiryDate] = token.expiryDate!!
+            }.value
+        }
+    }
+
+    fun update(id: Long, token: Token): Token? {
+        transaction {
+            Tokens.update({ Tokens.id eq id }) { row ->
+                if (token.value != null) {
+                    row[value] = token.value
+                }
+
+                if (token.expiryDate != null) {
+                    row[expiryDate] = token.expiryDate
+                }
+            }
+        }
+        return findTokenById(id)
     }
 }
