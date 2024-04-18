@@ -1,5 +1,6 @@
 package dev.traydr.vu
 
+import dev.traydr.vu.config.DbConfig
 import dev.traydr.vu.domain.repository.TokenRepository
 import dev.traydr.vu.domain.repository.UserRepository
 import dev.traydr.vu.domain.service.TokenService
@@ -37,6 +38,8 @@ fun Application.module() {
     install(Koin) {
         modules(repoModule, serviceModule)
     }
+
+    DbConfig.setup("jdbc:sqlite:db/sqlite.db", "", "")
 
     configureSecurity()
     configureSerialization()
