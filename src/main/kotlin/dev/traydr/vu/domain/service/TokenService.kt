@@ -51,7 +51,17 @@ class TokenService(
     }
 
     fun refreshToken(token: Token) {
+        var tokenCopy = token.copy()
+        if (tokenCopy.expiryDate?.isBefore(LocalDateTime.now()) == true) {
+            tokenCopy = tokenCopy.copy(value = createToken())
+        }
 
+        tokenCopy.id?.let {
+            tokenRepository.update(
+                it,
+                tokenCopy.copy(expiryDate = LocalDateTime.now().plusDays(7))
+            )
+        }
     }
 
     fun getTokenById(id: Long): Token? {
