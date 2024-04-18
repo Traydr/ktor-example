@@ -27,8 +27,6 @@ application {
     mainClass.set("dev.traydr.vu.ApplicationKt")
 
     val isDevelopment: Boolean = System.getenv("DEV") == "true"
-//    val isDevelopment: Boolean = project.ext.has("development")
-//    val isDevelopment: Boolean = true
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
