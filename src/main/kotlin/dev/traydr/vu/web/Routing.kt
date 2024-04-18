@@ -63,6 +63,7 @@ fun Application.configureRouting() {
         }
         staticFiles("/css", File("src/main/resources/css/styles.css"))
     }
+    // API routes
     routing {
         post("/api/v1/upload") {
             val multipart = call.receiveMultipart()

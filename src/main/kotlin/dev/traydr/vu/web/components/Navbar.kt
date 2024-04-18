@@ -17,6 +17,27 @@ fun FlowContent.navbar() = nav {
     }
 
     div {
+        classes = setOf("navbar-center", "tabs", "tabs-boxed", "bg-sky-800")
+        ul {
+            classes = setOf("menu", "menu-horizontal", "px-1")
+            li {
+                a {
+                    href = "/images"
+                    +"images"
+                }
+            }
+            li {
+                a {
+                    href = "/db"
+                    +"db"
+                }
+            }
+        }
+
+
+    }
+
+    div {
         classes = setOf("navbar-end", "text-xl", "pr-4")
         div {
             +"Welcome!"
