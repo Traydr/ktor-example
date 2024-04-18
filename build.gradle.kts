@@ -2,9 +2,9 @@ val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
 val exposed_version: String = "0.41.1"
-val kodein_version: String = "7.21.1"
 val hikari_version: String = "5.1.0"
 val kotlinx_version: String = "0.10.1"
+val koin_version: String = "3.5.6"
 
 plugins {
     kotlin("jvm") version "1.9.23"
@@ -49,7 +49,7 @@ dependencies {
     implementation("com.h2database:h2:2.1.214")
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:$logback_version")
-    implementation ("org.kodein.di:kodein-di:$kodein_version")
+    implementation("io.insert-koin:koin-ktor:$koin_version")
     implementation("io.ktor:ktor-server-auth:$ktor_version")
     implementation("com.zaxxer:HikariCP:$hikari_version")
     implementation("at.favre.lib:bcrypt:0.10.2")
