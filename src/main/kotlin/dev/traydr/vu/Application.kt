@@ -1,8 +1,10 @@
 package dev.traydr.vu
 
 import dev.traydr.vu.config.DbConfig
+import dev.traydr.vu.domain.repository.GlobalPairsRepository
 import dev.traydr.vu.domain.repository.TokenRepository
 import dev.traydr.vu.domain.repository.UserRepository
+import dev.traydr.vu.domain.service.GlobalPairsService
 import dev.traydr.vu.domain.service.TokenService
 import dev.traydr.vu.domain.service.UserService
 import dev.traydr.vu.web.configureRouting
@@ -28,11 +30,13 @@ fun Application.module() {
     val repoModule = org.koin.dsl.module {
         single { UserRepository() }
         single { TokenRepository() }
+        single { GlobalPairsRepository() }
     }
 
     val serviceModule = org.koin.dsl.module {
         single { TokenService(get(), get()) }
         single { UserService(get()) }
+        single { GlobalPairsService(get()) }
     }
 
     install(Koin) {

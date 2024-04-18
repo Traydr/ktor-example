@@ -55,7 +55,8 @@ fun HTML.databasePage() {
 
                     form {
                         hxGet("/api/v1/global")
-                        hxTarget("state-output")
+                        hxTarget("#state-output")
+                        hxSwap("innerHTML")
 
                         input {
                             name = "key"
@@ -74,6 +75,7 @@ fun HTML.databasePage() {
 
                     div {
                         id = "state-output"
+                        classes = setOf("text-center", "outline", "outline-offset-0", "outline-orange-500")
                         +"Output will be displayed here"
                     }
                 }
@@ -82,7 +84,7 @@ fun HTML.databasePage() {
 
                     h2 {
                         classes = setOf("text-xl", "p-4")
-                        +"You will be updateing a key-value pair to a global store"
+                        +"You will be updating a key-value pair to a global store"
                     }
 
                     form {

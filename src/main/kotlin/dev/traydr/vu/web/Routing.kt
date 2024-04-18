@@ -1,5 +1,7 @@
 package dev.traydr.vu.web
 
+import dev.traydr.vu.domain.GlobalPair
+import dev.traydr.vu.domain.service.GlobalPairsService
 import dev.traydr.vu.domain.service.TokenService
 import dev.traydr.vu.domain.service.UserService
 import dev.traydr.vu.web.pages.databasePage
@@ -15,12 +17,19 @@ import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.html.HTML
+import kotlinx.html.body
+import kotlinx.html.div
+import kotlinx.html.html
+import kotlinx.html.stream.createHTML
+import org.koin.ktor.ext.getProperty
 import org.koin.ktor.ext.inject
 import java.io.File
 
 fun Application.configureRouting() {
     val tokenService by inject<TokenService>()
     val userService by inject<UserService>()
+    val globalPairsService by inject<GlobalPairsService>()
 
     install(StatusPages) {
         status(HttpStatusCode.NotFound) { call, status ->
@@ -65,6 +74,49 @@ fun Application.configureRouting() {
     }
     // API routes
     routing {
+        get("/api/v1/global") {
+            val key: String = call.request.queryParameters["key"].toString()
+            val pair: GlobalPair? = globalPairsService.get(key)
+            call.respondHtml {
+                body {
+                    div {
+                        if (pair != null) {
+                            +"$key : ${pair.value}"
+                        } else {
+                            +"$key does not have a pair"
+                        }
+                    }
+                }
+            }
+        }
+        post("/api/v1/global") {
+            val params = call.receiveParameters()
+            val key: String = params["key"].toString()
+            val value: String = params["value"].toString()
+
+            if (key.isEmpty() || value.isEmpty()) {
+                call.respond(HttpStatusCode.BadRequest, "Key or Value is missing")
+            } else if (key.length > 255 || value.length > 255) {
+                call.respond(HttpStatusCode.BadRequest, "Key or Value is above char limit")
+            }
+
+            globalPairsService.create(key, value)
+            call.respond(HttpStatusCode.OK)
+        }
+        put("/api/v1/global") {
+            val params = call.receiveParameters()
+            val key: String = params["key"].toString()
+            val value: String = params["value"].toString()
+
+            if (key.isEmpty() || value.isEmpty()) {
+                call.respond(HttpStatusCode.BadRequest, "Key or Value is missing")
+            } else if (key.length > 255 || value.length > 255) {
+                call.respond(HttpStatusCode.BadRequest, "Key or Value is above char limit")
+            }
+
+            globalPairsService.update(key, value)
+            call.respond(HttpStatusCode.OK)
+        }
         post("/api/v1/upload") {
             val multipart = call.receiveMultipart()
             multipart.forEachPart { part ->
