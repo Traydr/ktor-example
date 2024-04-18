@@ -8,7 +8,7 @@ fun FlowContent.navbar() = nav {
     classes = setOf("navbar", "bg-base-100/75", "outline", "outline-offset-0", "outline-blue-800")
 
     div {
-        classes = setOf("flex-1")
+        classes = setOf("navbar-start")
         a {
             classes = setOf("btn", "btn-ghost", "text-xl", "text-bold")
             href = "/"
@@ -38,8 +38,9 @@ fun FlowContent.navbar() = nav {
     }
 
     div {
-        classes = setOf("navbar-end", "text-xl", "pr-4")
+        classes = setOf("navbar-end", "text-xl")
         div {
+            classes = setOf("pr-4")
             +"Welcome!"
         }
     }
