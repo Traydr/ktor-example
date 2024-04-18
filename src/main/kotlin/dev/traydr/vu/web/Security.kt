@@ -34,6 +34,7 @@ fun Application.configureSecurity() {
                 } else if (token.value != session.value) {
                     null
                 } else {
+                    tokenService.refreshToken(token)
                     session
                 }
             }
