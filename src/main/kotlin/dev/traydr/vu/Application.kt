@@ -16,9 +16,16 @@ import io.ktor.server.netty.*
 import org.koin.ktor.plugin.Koin
 
 fun main() {
+    val port = System.getenv("PORT").toInt()
+
+    if (port < 1 || port > 65530) {
+        println("Invalid port, please enter valid range from 1 to 65530")
+        return
+    }
+
     embeddedServer(
         Netty,
-        port = 8080,
+        port = port,
         host = "0.0.0.0",
         module = Application::module,
         watchPaths = listOf("classes", "resources")
