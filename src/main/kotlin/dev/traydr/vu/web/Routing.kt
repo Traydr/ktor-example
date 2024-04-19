@@ -48,7 +48,6 @@ fun Application.configureRouting() {
     routing {
         get("/") {
             call.respondHtml(HttpStatusCode.OK) {
-                println("\n\n\nGOT CALLED\n\n\n")
                 indexPage()
             }
         }
