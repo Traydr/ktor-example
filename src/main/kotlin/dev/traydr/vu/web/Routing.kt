@@ -121,7 +121,6 @@ fun Application.configureRouting() {
             call.respond(HttpStatusCode.OK)
         }
         post("/api/v1/upload") {
-            println("Just here for debug")
             val multipart = call.receiveMultipart()
             multipart.forEachPart { part ->
                 if (part is PartData.FileItem) {
