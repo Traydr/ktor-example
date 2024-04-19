@@ -52,7 +52,7 @@ fun Application.module() {
 
     val postgresIp = System.getenv("PG_IP")
     val postgresUsername = System.getenv("PG_USERNAME")
-    val postgresPassword = System.getenv("PG_Password")
+    val postgresPassword = System.getenv("PG_PASSWORD")
     DbConfig.setup(
         "jdbc:postgresql://$postgresIp:5432/postgres",
         postgresUsername,
