@@ -23,6 +23,8 @@ fun main() {
         return
     }
 
+    println("\n\n\nStarting on port $port \n\n\n")
+
     embeddedServer(
         Netty,
         port = port,
