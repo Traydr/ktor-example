@@ -59,7 +59,7 @@ dependencies {
     implementation("com.zaxxer:HikariCP:$hikari_version")
     implementation("at.favre.lib:bcrypt:0.10.2")
     implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
-    implementation("org.postgresql:postgresql:42.7.1")
+    implementation("org.postgresql:postgresql:42.7.2")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
