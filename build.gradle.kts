@@ -1,10 +1,10 @@
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
-val exposed_version: String = "0.41.1"
-val hikari_version: String = "5.1.0"
-val kotlinx_version: String = "0.10.1"
-val koin_version: String = "3.5.6"
+val exposed_version: String by project
+val hikari_version: String by project
+val kotlinx_version: String by project
+val koin_version: String by project
 
 plugins {
     kotlin("jvm") version "1.9.23"
