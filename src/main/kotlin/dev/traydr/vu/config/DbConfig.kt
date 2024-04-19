@@ -12,6 +12,7 @@ object DbConfig {
             config.jdbcUrl = jdbcUrl
             config.username = username
             config.password = password
+            config.initializationFailTimeout = 3000
         }
         Database.connect(HikariDataSource(config))
     }
