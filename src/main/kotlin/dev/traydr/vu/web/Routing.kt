@@ -61,6 +61,9 @@ fun Application.configureRouting() {
                 databasePage()
             }
         }
+        get("/healthcheck") {
+            call.respond(HttpStatusCode.OK)
+        }
         get("/robots.txt") {
             call.respondText {
                 """
