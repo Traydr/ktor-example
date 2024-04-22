@@ -43,10 +43,20 @@ tasks.register<Exec>("npmInstall") {
     commandLine("npm", "install")
 }
 
-tasks.build {
+// Very verbose way to specify order
+tasks.tailwindDownload {
     dependsOn(tasks.getByName("npmInstall"))
+}
+
+tasks.tailwindInit {
     dependsOn(tasks.tailwindDownload)
+}
+
+tasks.tailwindCompile {
     dependsOn(tasks.tailwindInit)
+}
+
+tasks.build {
     dependsOn(tasks.tailwindCompile)
 }
 
