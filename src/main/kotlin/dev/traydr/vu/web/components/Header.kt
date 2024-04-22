@@ -27,5 +27,8 @@ fun HTML.header(title: String, description: String) {
             integrity = "sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0"
             attributes["crossorigin"] = "anonymous"
         }
+        script {
+            src = "https://unpkg.com/htmx.org@1.9.12/dist/ext/path-params.js"
+        }
     }
 }
