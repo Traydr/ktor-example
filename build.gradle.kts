@@ -38,7 +38,13 @@ ktor {
     }
 }
 
+tasks.register<Exec>("npmInstall") {
+    workingDir = File("src/main/resources")
+    commandLine("npm", "install")
+}
+
 tasks.build {
+    dependsOn(tasks.getByName("npmInstall"))
     dependsOn(tasks.tailwindDownload)
     dependsOn(tasks.tailwindCompile)
 }
