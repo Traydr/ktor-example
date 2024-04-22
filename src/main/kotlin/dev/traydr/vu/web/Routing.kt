@@ -7,6 +7,8 @@ import dev.traydr.vu.domain.service.TokenService
 import dev.traydr.vu.domain.service.UserService
 import dev.traydr.vu.utils.acceptedUploadExtension
 import dev.traydr.vu.utils.uploadPath
+import dev.traydr.vu.web.components.gsFormPost
+import dev.traydr.vu.web.components.gsFormPut
 import dev.traydr.vu.web.pages.databasePage
 import dev.traydr.vu.web.pages.errorPage
 import dev.traydr.vu.web.pages.imagePage
@@ -106,7 +108,11 @@ fun Application.configureRouting() {
             }
 
             globalPairsService.create(key, Jsoup.clean(value, Safelist.none()))
-            call.respond(HttpStatusCode.OK)
+            call.respondHtml(HttpStatusCode.OK) {
+                body {
+                    gsFormPost()
+                }
+            }
         }
         put("/api/v1/global") {
             val params = call.receiveParameters()
@@ -120,7 +126,11 @@ fun Application.configureRouting() {
             }
 
             globalPairsService.update(key, Jsoup.clean(value, Safelist.none()))
-            call.respond(HttpStatusCode.OK)
+            call.respondHtml(HttpStatusCode.OK) {
+                body {
+                    gsFormPut()
+                }
+            }
         }
         post("/api/v1/upload") {
             var fileDescription = ""

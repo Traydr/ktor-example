@@ -19,31 +19,7 @@ fun HTML.databasePage() {
                         +"You will be submitting a key-value pair to a global store"
                     }
 
-                    form {
-                        hxPost("/api/v1/global")
-
-                        input {
-                            name = "key"
-                            id = "input-key"
-                            type = InputType.text
-                            placeholder = "Key"
-                            classes = setOf("input", "input-bordered", "w-full", "max-w-s")
-                        }
-
-                        input {
-                            name = "value"
-                            id = "input-value"
-                            type = InputType.text
-                            placeholder = "Value"
-                            classes = setOf("input", "input-bordered", "w-full", "max-w-s")
-                        }
-
-                        button {
-                            classes = setOf("btn btn-primary")
-                            type = ButtonType.submit
-                            +"Submit"
-                        }
-                    }
+                    gsFormPost()
                 }
                 div {
                     classes = setOf("flex", "justify-center", "grid", "grid-cols-1")
@@ -68,7 +44,6 @@ fun HTML.databasePage() {
 
                         button {
                             classes = setOf("btn", "btn-primary")
-                            type = ButtonType.submit
                             +"Display"
                         }
                     }
@@ -87,31 +62,7 @@ fun HTML.databasePage() {
                         +"You will be updating a key-value pair to a global store"
                     }
 
-                    form {
-                        hxPut("/api/v1/global")
-
-                        input {
-                            name = "key"
-                            id = "existing-key"
-                            type = InputType.text
-                            placeholder = "Key"
-                            classes = setOf("input", "input-bordered", "w-full", "max-w-s")
-                        }
-
-                        input {
-                            name = "value"
-                            id = "new-value"
-                            type = InputType.text
-                            placeholder = "Value"
-                            classes = setOf("input", "input-bordered", "w-full", "max-w-s")
-                        }
-
-                        button {
-                            classes = setOf("btn btn-primary")
-                            type = ButtonType.submit
-                            +"Update"
-                        }
-                    }
+                    gsFormPut()
                 }
             }
         }
