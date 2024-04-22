@@ -171,6 +171,7 @@ fun Application.configureRouting() {
 
             if (file.exists()) {
                 call.response.header("Content-Disposition", "attachment; filename=\"${file.name}\"")
+                call.response.header("HX-Redirect", "/api/v1/download/$filename")
                 call.respondFile(file)
             } else call.respond(HttpStatusCode.NotFound)
         }
