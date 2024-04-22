@@ -27,7 +27,7 @@ tailwind {
 
 application {
     mainClass.set("dev.traydr.vu.ApplicationKt")
-    
+
     val isDevelopment: Boolean = providers.environmentVariable("DEV").isPresent
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
@@ -38,14 +38,7 @@ ktor {
     }
 }
 
-tasks.register<Exec>("installNode") {
-    commandLine("docker", "pull", "node:20-alpine")
-}
-
 tasks.build {
-    if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
-        dependsOn(tasks.getAt("installNode"))
-    }
     dependsOn(tasks.tailwindDownload)
     dependsOn(tasks.tailwindCompile)
 }
