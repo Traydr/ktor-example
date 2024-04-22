@@ -16,7 +16,7 @@ import io.ktor.server.netty.*
 import org.koin.ktor.plugin.Koin
 
 fun main() {
-    val port = System.getenv("PORT").toInt()
+    val port = (System.getenv("PORT")?: "8080").toInt()
 
     if (port < 1 || port > 65530) {
         println("Invalid port, please enter valid range from 1 to 65530")
@@ -50,9 +50,9 @@ fun Application.module() {
         modules(repoModule, serviceModule)
     }
 
-    val postgresIp = System.getenv("PG_IP")
-    val postgresUsername = System.getenv("PG_USERNAME")
-    val postgresPassword = System.getenv("PG_PASSWORD")
+    val postgresIp = System.getenv("PG_IP")?: "0.0.0.0"
+    val postgresUsername = System.getenv("PG_USERNAME")?: "postgres"
+    val postgresPassword = System.getenv("PG_PASSWORD")?: ""
     DbConfig.setup(
         "jdbc:postgresql://$postgresIp:5432/postgres",
         postgresUsername,

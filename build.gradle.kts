@@ -27,8 +27,8 @@ tailwind {
 
 application {
     mainClass.set("dev.traydr.vu.ApplicationKt")
-
-    val isDevelopment: Boolean = System.getenv("DEV") == "true"
+    
+    val isDevelopment: Boolean = providers.environmentVariable("DEV").isPresent
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
