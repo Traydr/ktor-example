@@ -57,3 +57,15 @@ fun HTMLTag.hxPushURL(value: String) {
 fun HTMLTag.hxEncoding(value: String) {
     attributes += "hx-encoding" to value
 }
+
+fun HTMLTag.hxInclude(value: String) {
+    attributes += "hx-include" to value
+}
+
+fun HTMLTag.hxExt(value: String) {
+    attributes += "hx-ext" to value
+}
+
+fun HTMLTag.hxReplaceUrl(value: String) {
+    attributes += "hx-ext" to value
+}
