@@ -46,7 +46,9 @@ tasks.register<Exec>("npmInstall") {
 
 // Very verbose way to specify order
 tasks.tailwindDownload {
-    dependsOn(tasks.getByName("npmInstall"))
+    if (Os.isFamily(Os.FAMILY_UNIX)) {
+        dependsOn(tasks.getByName("npmInstall"))
+    }
 }
 
 tasks.tailwindInit {
