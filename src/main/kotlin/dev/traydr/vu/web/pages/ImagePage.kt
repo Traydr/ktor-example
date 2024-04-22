@@ -13,16 +13,34 @@ fun HTML.imagePage() {
         navbar()
         wrapper("Submitting Images") {
             div {
+                classes = setOf("text-center", "gap-4")
+                h2 {
+                    classes = setOf("text-xl")
+                    +"Here you will be uploading and downloading image files"
+                }
+
+                h4 {
+                    +"Allowed extensions: png, jpg, jpeg"
+                }
+            }
+            div {
                 classes = setOf("container", "mx-auto", "grid", "grid-cols-2", "gap-4")
                 div {
                     classes = setOf("flex", "justify-center")
                     form {
+                        classes = setOf("grid", "grid-cols-1", "gap-1")
                         id = "upload-image"
                         hxPost("/api/v1/upload")
                         hxEncoding("multipart/form-data")
 
                         input {
-                            classes = setOf("file-input", "w-full", "max-w-xs")
+                            classes = setOf(
+                                "file-input",
+                                "file-input-bordered",
+                                "file-input-accent",
+                                "w-full",
+                                "max-w-xs"
+                            )
                             name = "file"
                             type = InputType.file
                         }
@@ -36,13 +54,21 @@ fun HTML.imagePage() {
                 div {
                     classes = setOf("flex", "justify-center")
                     form {
+                        classes = setOf("grid", "grid-cols-1", "gap-1")
                         id = "download-image"
                         hxGet("/api/v1/download/{fileName}")
                         hxInclude("[name='fileName']")
                         hxExt("path-params")
 
                         input {
-                            classes = setOf("file-input", "w-full", "max-w-xs")
+                            classes = setOf(
+                                "input",
+                                "input-bordered",
+                                "input-accent",
+                                "w-full",
+                                "max-w-xs"
+                            )
+                            placeholder = "filename.txt"
                             name = "fileName"
                             type = InputType.text
                         }
