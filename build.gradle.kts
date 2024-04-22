@@ -1,3 +1,5 @@
+import org.codehaus.plexus.util.Os
+
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
@@ -36,11 +38,14 @@ ktor {
     }
 }
 
-tasks.register<Copy>("InstallTailwind") {
-
+tasks.register<Exec>("installNode") {
+    commandLine("docker", "pull", "node:20-alpine")
 }
 
-tasks.compileKotlin {
+tasks.build {
+    if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
+        dependsOn(tasks.getAt("installNode"))
+    }
     dependsOn(tasks.tailwindDownload)
     dependsOn(tasks.tailwindCompile)
 }
