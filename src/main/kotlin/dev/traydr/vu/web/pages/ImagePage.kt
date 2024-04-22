@@ -17,17 +17,18 @@ fun HTML.imagePage() {
                 div {
                     classes = setOf("flex", "justify-center")
                     form {
+                        id = "upload-image"
                         hxPost("/api/v1/upload")
                         hxEncoding("multipart/form-data")
 
                         input {
                             classes = setOf("file-input", "w-full", "max-w-xs")
+                            name = "file"
                             type = InputType.file
                         }
 
                         button {
                             classes = setOf("btn btn-primary")
-                            type = ButtonType.submit
                             +"Upload"
                         }
                     }
@@ -35,6 +36,7 @@ fun HTML.imagePage() {
                 div {
                     classes = setOf("flex", "justify-center")
                     form {
+                        id = "download-image"
                         hxGet("/api/v1/download/{fileName}")
                         hxInclude("[name='fileName']")
                         hxExt("path-params")
