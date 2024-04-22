@@ -1,9 +1,12 @@
 package dev.traydr.vu.web
 
 import dev.traydr.vu.domain.GlobalPair
+import dev.traydr.vu.domain.exceptions.UnsupportedFileExtension
 import dev.traydr.vu.domain.service.GlobalPairsService
 import dev.traydr.vu.domain.service.TokenService
 import dev.traydr.vu.domain.service.UserService
+import dev.traydr.vu.utils.acceptedUploadExtension
+import dev.traydr.vu.utils.uploadPath
 import dev.traydr.vu.web.pages.databasePage
 import dev.traydr.vu.web.pages.errorPage
 import dev.traydr.vu.web.pages.imagePage
@@ -17,16 +20,13 @@ import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.html.HTML
 import kotlinx.html.body
 import kotlinx.html.div
-import kotlinx.html.html
-import kotlinx.html.stream.createHTML
 import org.jsoup.Jsoup
 import org.jsoup.safety.Safelist
-import org.koin.ktor.ext.getProperty
 import org.koin.ktor.ext.inject
 import java.io.File
+import java.util.*
 
 fun Application.configureRouting() {
     val tokenService by inject<TokenService>()
@@ -123,49 +123,51 @@ fun Application.configureRouting() {
             call.respond(HttpStatusCode.OK)
         }
         post("/api/v1/upload") {
-            val multipart = call.receiveMultipart()
-            multipart.forEachPart { part ->
-                if (part is PartData.FileItem) {
-                    val name = part.originalFileName!!
-                    val file = File("/uploads/$name")
-
-                    part.streamProvider().use { its ->
-                        file.outputStream().buffered().use {
-                            its.copyTo(it)
-                        }
-                    }
-                }
-                part.dispose()
-            }
-            call.response.status(HttpStatusCode.OK)
-        }
-        post("/api/v2/upload") {
             var fileDescription = ""
             var fileName = ""
             val multipartData = call.receiveMultipart()
 
-            multipartData.forEachPart { part ->
-                when (part) {
-                    is PartData.FormItem -> {
-                        fileDescription = part.value
-                    }
+            try {
+                multipartData.forEachPart { partData ->
+                    when (partData) {
+                        is PartData.FormItem -> {
+                            fileDescription = partData.value
+                        }
 
-                    is PartData.FileItem -> {
-                        fileName = part.originalFileName as String
-                        val fileBytes = part.streamProvider().readBytes()
-                        File("uploads/$fileName").writeBytes(fileBytes)
-                    }
+                        is PartData.FileItem -> {
+                            val fileBytes = partData.streamProvider().readBytes()
+                            val fileExtension = partData.originalFileName?.takeLastWhile { it != '.' }
 
-                    else -> {}
+                            if (!acceptedUploadExtension.contains(fileExtension)) {
+                                throw UnsupportedFileExtension("File extension '$fileExtension' is not supported")
+                            }
+
+//                            fileName = UUID.randomUUID().toString() + "." + fileExtension
+                            fileName = partData.originalFileName ?: ("default$fileExtension")
+                            val folder = File(uploadPath)
+                            folder.mkdir()
+                            File("$uploadPath$fileName").writeBytes(fileBytes)
+                        }
+
+                        else -> {}
+                    }
+                    partData.dispose()
                 }
-                part.dispose()
+            }
+            catch (e: Exception) {
+                File("upload/$fileName").delete()
+
+                if (e is UnsupportedFileExtension) {
+                    call.respond(HttpStatusCode.NotAcceptable, e.message.toString())
+                }
+                call.respond(HttpStatusCode.InternalServerError,"Error")
             }
 
             call.respondText("$fileDescription is uploaded to 'uploads/$fileName'")
         }
         get("/api/v1/download/{name}") {
             val filename = call.parameters["name"]!!
-            val file = File("/uploads/$filename")
+            val file = File("$uploadPath$filename")
 
             if (file.exists()) {
                 call.response.header("Content-Disposition", "attachment; filename=\"${file.name}\"")
