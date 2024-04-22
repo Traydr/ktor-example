@@ -1,8 +1,6 @@
 package dev.traydr.vu.web.pages
 
-import dev.traydr.vu.utils.hxEncoding
-import dev.traydr.vu.utils.hxGet
-import dev.traydr.vu.utils.hxPost
+import dev.traydr.vu.utils.*
 import dev.traydr.vu.web.components.footer
 import dev.traydr.vu.web.components.header
 import dev.traydr.vu.web.components.navbar
@@ -19,7 +17,7 @@ fun HTML.imagePage() {
                 div {
                     classes = setOf("flex", "justify-center")
                     form {
-                        hxPost("/api/v2/upload")
+                        hxPost("/api/v1/upload")
                         hxEncoding("multipart/form-data")
 
                         input {
@@ -36,10 +34,21 @@ fun HTML.imagePage() {
                 }
                 div {
                     classes = setOf("flex", "justify-center")
-                    button {
-                        classes = setOf("btn btn-primary")
-                        hxGet("/api/v1/download/file.txt")
-                        +"Download"
+                    form {
+                        hxGet("/api/v1/download/{fileName}")
+                        hxInclude("[name='fileName']")
+                        hxExt("path-params")
+
+                        input {
+                            classes = setOf("file-input", "w-full", "max-w-xs")
+                            name = "fileName"
+                            type = InputType.text
+                        }
+
+                        button {
+                            classes = setOf("btn btn-primary")
+                            +"Download"
+                        }
                     }
                 }
             }
