@@ -46,6 +46,7 @@ tasks.register<Exec>("npmInstall") {
 tasks.build {
     dependsOn(tasks.getByName("npmInstall"))
     dependsOn(tasks.tailwindDownload)
+    dependsOn(tasks.tailwindInit)
     dependsOn(tasks.tailwindCompile)
 }
 
