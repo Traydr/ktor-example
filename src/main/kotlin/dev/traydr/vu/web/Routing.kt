@@ -22,6 +22,8 @@ import kotlinx.html.body
 import kotlinx.html.div
 import kotlinx.html.html
 import kotlinx.html.stream.createHTML
+import org.jsoup.Jsoup
+import org.jsoup.safety.Safelist
 import org.koin.ktor.ext.getProperty
 import org.koin.ktor.ext.inject
 import java.io.File
@@ -103,7 +105,7 @@ fun Application.configureRouting() {
                 call.respond(HttpStatusCode.BadRequest, "Key or Value is above char limit")
             }
 
-            globalPairsService.create(key, value)
+            globalPairsService.create(key, Jsoup.clean(value, Safelist.none()))
             call.respond(HttpStatusCode.OK)
         }
         put("/api/v1/global") {
@@ -117,7 +119,7 @@ fun Application.configureRouting() {
                 call.respond(HttpStatusCode.BadRequest, "Key or Value is above char limit")
             }
 
-            globalPairsService.update(key, value)
+            globalPairsService.update(key, Jsoup.clean(value, Safelist.none()))
             call.respond(HttpStatusCode.OK)
         }
         post("/api/v1/upload") {

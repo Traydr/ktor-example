@@ -7,6 +7,7 @@ val exposed_version: String by project
 val hikari_version: String by project
 val kotlinx_version: String by project
 val koin_version: String by project
+val jsoup_version: String by project
 
 plugins {
     kotlin("jvm") version "1.9.23"
@@ -84,6 +85,7 @@ dependencies {
     implementation("at.favre.lib:bcrypt:0.10.2")
     implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
     implementation("org.postgresql:postgresql:42.7.2")
+    implementation("org.jsoup:jsoup:$jsoup_version")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
