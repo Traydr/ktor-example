@@ -12,7 +12,7 @@ object DbConfig {
             config.jdbcUrl = jdbcUrl
             config.username = username
             config.password = password
-            config.driverClassName = org.postgresql.Driver::class.java.canonicalName 
+            config.driverClassName = org.postgresql.Driver::class.java.canonicalName
             config.initializationFailTimeout = 3000
         }
         Database.connect(HikariDataSource(config))

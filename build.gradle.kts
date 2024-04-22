@@ -36,6 +36,15 @@ ktor {
     }
 }
 
+tasks.register<Copy>("InstallTailwind") {
+
+}
+
+tasks.compileKotlin {
+    dependsOn(tasks.tailwindDownload)
+    dependsOn(tasks.tailwindCompile)
+}
+
 repositories {
     mavenCentral()
 }
