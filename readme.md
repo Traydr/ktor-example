@@ -1,8 +1,14 @@
-# A KTOR app written to showcase web capabilities
+# Ktor example web app
 
-## Notes
+Using this to showcase and experiment with what is possible in ktor.
 
-## References
+This includes:
+
+- Connection with a database and using kotlin's exposed framework with hikari as the connection pool
+- Saving files to the local drive
+- Kotlin's Html DSL (kotlinx) and templating
+
+## Useful Resources
 
 - https://ktor.io/docs/server-auth.html#supported
 - https://ktor.io/docs/server-session-auth.html#save-session
