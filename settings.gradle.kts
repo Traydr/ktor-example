@@ -1,1 +1,1 @@
-rootProject.name = "ktor-vu"
+rootProject.name = "ktor-example"
