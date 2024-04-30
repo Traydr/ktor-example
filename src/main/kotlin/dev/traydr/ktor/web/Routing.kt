@@ -1,7 +1,7 @@
 package dev.traydr.ktor.web
 
 import dev.traydr.ktor.domain.GlobalPair
-import dev.traydr.ktor.domain.exceptions.UnsupportedFileExtension
+import dev.traydr.ktor.domain.exceptions.UnsupportedFileExtensionException
 import dev.traydr.ktor.domain.service.GlobalPairsService
 import dev.traydr.ktor.domain.service.TokenService
 import dev.traydr.ktor.domain.service.UserService
@@ -38,7 +38,7 @@ fun Application.configureRouting() {
         status(HttpStatusCode.NotFound) { call, status ->
             call.respondHtml(status = status) { errorPage("404: Page Not Found", 404) }
         }
-        exception<Throwable> { call, cause ->
+        exception<Throwable> { call, _ ->
             call.respondHtml(status = HttpStatusCode.InternalServerError) {
                 errorPage(
                     "500: Internal Server Error",
@@ -149,7 +149,7 @@ fun Application.configureRouting() {
                             val fileExtension = partData.originalFileName?.takeLastWhile { it != '.' }
 
                             if (!acceptedUploadExtension.contains(fileExtension)) {
-                                throw UnsupportedFileExtension("File extension '$fileExtension' is not supported")
+                                throw UnsupportedFileExtensionException("File extension '$fileExtension' is not supported")
                             }
 
 //                            fileName = UUID.randomUUID().toString() + "." + fileExtension
@@ -167,7 +167,7 @@ fun Application.configureRouting() {
             catch (e: Exception) {
                 File("upload/$fileName").delete()
 
-                if (e is UnsupportedFileExtension) {
+                if (e is UnsupportedFileExtensionException) {
                     call.respond(HttpStatusCode.NotAcceptable, e.message.toString())
                 }
                 call.respond(HttpStatusCode.InternalServerError,"Error")
