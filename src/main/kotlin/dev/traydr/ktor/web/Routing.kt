@@ -77,13 +77,7 @@ fun Application.configureRouting() {
             }
         }
         staticFiles("/css", File("src/main/resources/css/styles.css"))
-        staticFiles("/favicon.ico", File("src/main/resources/static/favicon.ico"))
-        staticFiles("/favicon-16x16.png", File("src/main/resources/static/favicon-16x16.ico"))
-        staticFiles("/favicon-32x32.png", File("src/main/resources/static/favicon-32x32.ico"))
-        staticFiles("/apple-touch-icon.png", File("src/main/resources/static/apple-touch-icon.png"))
-        staticFiles("/android-chrome-192x192.png", File("src/main/resources/static/android-chrome-192x192.png"))
-        staticFiles("/android-chrome-512x512.png", File("src/main/resources/static/android-chrome-512x512.png"))
-        staticFiles("/site.webmanifest", File("src/main/resources/static/site.webmanifest"))
+        staticFiles("/", File("src/main/resources/static/"))
     }
     // API routes
     routing {
