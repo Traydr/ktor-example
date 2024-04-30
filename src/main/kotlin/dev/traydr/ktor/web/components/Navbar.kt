@@ -23,13 +23,13 @@ fun FlowContent.navbar() = nav {
             li {
                 a {
                     href = "/images"
-                    +"images"
+                    +"Images"
                 }
             }
             li {
                 a {
                     href = "/db"
-                    +"db"
+                    +"Db"
                 }
             }
         }
