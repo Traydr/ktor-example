@@ -4,7 +4,7 @@ import dev.traydr.ktor.web.components.*
 import kotlinx.html.*
 
 fun HTML.databasePage() {
-    header("Db Manipulation", "Manipulating the data in the db")
+    header("KT | Storage Manipulation", "Manipulating data in the database")
     body {
         navbar()
         wrapper("Global key-value store") {

@@ -8,7 +8,7 @@ import dev.traydr.ktor.web.components.wrapper
 import kotlinx.html.*
 
 fun HTML.imagePage() {
-    header("Image Manipulator", "Upload and download images")
+    header("KT | Images", "Upload and download images")
     body {
         navbar()
         wrapper("Submitting Images") {

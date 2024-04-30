@@ -4,7 +4,7 @@ import dev.traydr.ktor.web.components.*
 import kotlinx.html.*
 
 fun HTML.indexPage() {
-    header("Index", "The home page")
+    header("KT | Home", "The home page")
     body {
         navbar()
         wrapper("Home") {

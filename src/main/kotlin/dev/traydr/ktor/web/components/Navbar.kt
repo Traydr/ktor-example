@@ -12,7 +12,7 @@ fun FlowContent.navbar() = nav {
         a {
             classes = setOf("btn", "btn-ghost", "text-xl", "text-bold")
             href = "/"
-            +"Web Testing"
+            +"Ktor Example"
         }
     }
 
