@@ -32,6 +32,12 @@ fun FlowContent.navbar() = nav {
                     +"Db"
                 }
             }
+            li {
+                a {
+                    href = "/ext-api"
+                    +"Api"
+                }
+            }
         }
 
 
