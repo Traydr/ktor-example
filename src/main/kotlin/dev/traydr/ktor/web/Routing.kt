@@ -1,6 +1,12 @@
 package dev.traydr.ktor.web
 
+import com.openmeteo.api.Forecast
+import com.openmeteo.api.OpenMeteo
+import com.openmeteo.api.common.Response
+import com.openmeteo.api.common.time.Timezone
+import com.openmeteo.api.common.units.TemperatureUnit
 import dev.traydr.ktor.domain.GlobalPair
+import dev.traydr.ktor.domain.exceptions.LocationNotFoundException
 import dev.traydr.ktor.domain.exceptions.UnsupportedFileExtensionException
 import dev.traydr.ktor.domain.service.GlobalPairsService
 import dev.traydr.ktor.domain.service.TokenService
@@ -9,10 +15,7 @@ import dev.traydr.ktor.utils.acceptedUploadExtension
 import dev.traydr.ktor.utils.uploadPath
 import dev.traydr.ktor.web.components.gsFormPost
 import dev.traydr.ktor.web.components.gsFormPut
-import dev.traydr.ktor.web.pages.databasePage
-import dev.traydr.ktor.web.pages.errorPage
-import dev.traydr.ktor.web.pages.imagePage
-import dev.traydr.ktor.web.pages.indexPage
+import dev.traydr.ktor.web.pages.*
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
@@ -22,8 +25,7 @@ import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.html.body
-import kotlinx.html.div
+import kotlinx.html.*
 import org.jsoup.Jsoup
 import org.jsoup.safety.Safelist
 import org.koin.ktor.ext.inject
@@ -64,6 +66,11 @@ fun Application.configureRouting() {
                 databasePage()
             }
         }
+        get("/ext-api") {
+            call.respondHtml(HttpStatusCode.OK) {
+                ApiPage()
+            }
+        }
         get("/healthcheck") {
             call.respond(HttpStatusCode.OK)
         }
@@ -81,6 +88,59 @@ fun Application.configureRouting() {
     }
     // API routes
     routing {
+        @OptIn(Response.ExperimentalGluedUnitTimeStepValues::class)
+        get("/api/v1/ext") {
+            call.respondHtml {
+                val location: String = call.request.queryParameters["location"] ?: ""
+                val om = OpenMeteo(location, "en")
+                val forecast = om.forecast {
+                    daily = Forecast.Daily {
+                        listOf(temperature2mMin, temperature2mMax)
+                    }
+                    temperatureUnit = TemperatureUnit.Celsius
+                    timezone = Timezone.auto
+                }.getOrElse {
+                    throw LocationNotFoundException("Could not find $location")
+                }
+
+                body {
+                    Forecast.Daily.run {
+                        val minTemp = forecast.daily.getValue(temperature2mMin)
+
+                        forecast.daily.getValue(temperature2mMax).run {
+                            div {
+                                classes = setOf("overflow-x-auto", "p-4")
+                                table {
+                                    classes = setOf("table", "table-zebra")
+                                    thead {
+                                        tr {
+                                            th { +"Date" }
+                                            th { +"Max Temp (C)" }
+                                            th { +"Min Temp (C)" }
+                                        }
+                                    }
+                                    tbody {
+                                        values.forEach{ (t, v) ->
+                                            tr {
+                                                td {
+                                                    +"$t"
+                                                }
+                                                td {
+                                                    +"$v"
+                                                }
+                                                td {
+                                                    +"${minTemp.values[t]}"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         get("/api/v1/global") {
             val key: String = call.request.queryParameters["key"].toString()
             val pair: GlobalPair? = globalPairsService.get(key)
@@ -146,7 +206,8 @@ fun Application.configureRouting() {
 
                         is PartData.FileItem -> {
                             val fileBytes = partData.streamProvider().readBytes()
-                            val fileExtension = partData.originalFileName?.takeLastWhile { it != '.' }
+                            val fileExtension =
+                                partData.originalFileName?.takeLastWhile { it != '.' }
 
                             if (!acceptedUploadExtension.contains(fileExtension)) {
                                 throw UnsupportedFileExtensionException("File extension '$fileExtension' is not supported")
@@ -163,14 +224,13 @@ fun Application.configureRouting() {
                     }
                     partData.dispose()
                 }
-            }
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 File("upload/$fileName").delete()
 
                 if (e is UnsupportedFileExtensionException) {
                     call.respond(HttpStatusCode.NotAcceptable, e.message.toString())
                 }
-                call.respond(HttpStatusCode.InternalServerError,"Error")
+                call.respond(HttpStatusCode.InternalServerError, "Error")
             }
 
             call.respondText("$fileDescription is uploaded to 'uploads/$fileName'")
