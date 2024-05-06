@@ -4,6 +4,7 @@ import dev.traydr.ktor.web.components.*
 import kotlinx.html.*
 
 fun HTML.indexPage() {
+    attributes["data-theme"] = "dark"
     header("KT | Home", "The home page")
     body {
         navbar()

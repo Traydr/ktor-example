@@ -8,6 +8,7 @@ import dev.traydr.ktor.web.components.wrapper
 import kotlinx.html.*
 
 fun HTML.errorPage(text: String, httpError: Int) {
+    attributes["data-theme"] = "dark"
     header("KT | Error $httpError", text)
     body {
         classes = setOf()

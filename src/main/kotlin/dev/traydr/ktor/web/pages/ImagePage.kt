@@ -8,6 +8,7 @@ import dev.traydr.ktor.web.components.wrapper
 import kotlinx.html.*
 
 fun HTML.imagePage() {
+    attributes["data-theme"] = "dark"
     header("KT | Images", "Upload and download images")
     body {
         navbar()

@@ -4,6 +4,7 @@ import dev.traydr.ktor.web.components.*
 import kotlinx.html.*
 
 fun HTML.databasePage() {
+    attributes["data-theme"] = "dark"
     header("KT | Storage Manipulation", "Manipulating data in the database")
     body {
         navbar()
