@@ -40,7 +40,8 @@ fun HTML.imagePage() {
                                 "file-input-bordered",
                                 "file-input-accent",
                                 "w-full",
-                                "max-w-xs"
+                                "max-w-xs",
+                                "grow"
                             )
                             name = "file"
                             type = InputType.file
@@ -67,7 +68,8 @@ fun HTML.imagePage() {
                                 "input-bordered",
                                 "input-accent",
                                 "w-full",
-                                "max-w-xs"
+                                "max-w-xs",
+                                "grow"
                             )
                             placeholder = "filename.txt"
                             name = "fileName"

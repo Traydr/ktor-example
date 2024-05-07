@@ -28,6 +28,7 @@ fun FlowContent.gsFormPost() = div {
                 name = "value"
                 id = "input-value"
                 type = InputType.text
+                classes = setOf("grow")
             }
         }
 
@@ -51,6 +52,7 @@ fun FlowContent.gsFormPut() = div {
                 name = "key"
                 id = "existing-key"
                 type = InputType.text
+                classes = setOf("grow")
             }
         }
 
@@ -62,6 +64,7 @@ fun FlowContent.gsFormPut() = div {
                 name = "value"
                 id = "new-value"
                 type = InputType.text
+                classes = setOf("grow")
             }
         }
 
@@ -87,6 +90,7 @@ fun FlowContent.gsFormGet() = div {
                 name = "key"
                 id = "output-key"
                 type = InputType.text
+                classes = setOf("grow")
             }
         }
 

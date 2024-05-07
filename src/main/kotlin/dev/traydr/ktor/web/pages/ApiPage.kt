@@ -33,6 +33,7 @@ fun HTML.ApiPage() {
                             name = "location"
                             id = "location-input"
                             type = InputType.text
+                            classes = setOf("grow")
                         }
                     }
 
