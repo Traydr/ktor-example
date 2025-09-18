@@ -18,7 +18,7 @@ import org.koin.ktor.plugin.Koin
 fun main() {
     val port = (System.getenv("PORT")?: "8080").toInt()
 
-    if (port < 1 || port > 65530) {
+    if (port !in 1..65530) {
         println("Invalid port, please enter valid range from 1 to 65530")
         return
     }
@@ -53,8 +53,9 @@ fun Application.module() {
     val postgresIp = System.getenv("PG_IP")?: "0.0.0.0"
     val postgresUsername = System.getenv("PG_USERNAME")?: "postgres"
     val postgresPassword = System.getenv("PG_PASSWORD")?: ""
+    val postgresPort = System.getenv("PG_PORT")?: "5432"
     DbConfig.setup(
-        "jdbc:postgresql://$postgresIp:5432/postgres",
+        "jdbc:postgresql://$postgresIp:$postgresPort/postgres",
         postgresUsername,
         postgresPassword
     )
